@@ -43,7 +43,10 @@ class City extends Locality implements SluggableInterface
      */
     private string $slug = '';
 
-    private ArrayCollection $relation;
+    /**
+     * @var ArrayCollection
+     */
+    private $relation;
 
     public function __construct() {
         parent::__construct();
