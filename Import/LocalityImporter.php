@@ -371,9 +371,13 @@ class LocalityImporter
         // check whether the archive is out of date
         if ($this->isImportPathHttp()) {
             $http = $this->getHttpClient();
-            $request = $http->head($importArchive);
-            $request->setHeader('If-Modified-Since', date('r', $cacheTimestamp));
-            $response = $request->send();
+            $options = [
+                'headers' => [
+                    'If-Modified-Since' => date('r', $cacheTimestamp)
+                ]
+            ];
+
+            $response = $http->head($importArchive, $options);
 
             // Based on the result of the head request indicate whether the
             // cache is stale

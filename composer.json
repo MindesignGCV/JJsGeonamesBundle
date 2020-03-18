@@ -1,6 +1,6 @@
 {
     "name": "macs/geonames-bundle",
-    "version": "v1.4.2",
+    "version": "v1.4.3",
     "description": "GeoNames.org geographical data and associated functionality",
     "keywords": ["GeoNames.org", "geographical", "countries", "database"],
     "license": "MIT",
@@ -11,9 +11,10 @@
         }
     ],
     "autoload": {
-        "psr-0": {"JJs\\Bundle\\GeonamesBundle": ""}
+        "psr-4": {
+            "JJs\\Bundle\\GeonamesBundle\\": "./"
+        }
     },
-    "target-dir": "JJs/Bundle/GeonamesBundle",
     "require": {
         "php": "*",
         "guzzlehttp/guzzle": ">=6",
