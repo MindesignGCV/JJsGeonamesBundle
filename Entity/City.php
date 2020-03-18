@@ -37,7 +37,7 @@ class City extends Locality implements SluggableInterface
 
     /**
      * @ManyToOne(targetEntity="State")
-     * @JMS\MaxDepth(2)
+     * @JMS\MaxDepth(3)
      */
     protected ?State $state = null;
 
@@ -49,7 +49,7 @@ class City extends Locality implements SluggableInterface
     /**
      * @var ArrayCollection
      * @JMS\Type("ArrayCollection<JJs\Bundle\GeonamesBundle\Entity\Locality>")
-     * @JMS\MaxDepth(2)
+     * @JMS\MaxDepth(3)
      */
     private $relation;
 
