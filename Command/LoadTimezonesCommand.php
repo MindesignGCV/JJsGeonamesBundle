@@ -63,13 +63,13 @@ class LoadTimezonesCommand extends Command
     /**
      * Executes the load timezones command
      */
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $file = $input->getArgument('file');
         $log = new OutputLogger($output);
 
         $this->timezoneLoader->load($file, $log);
 
-        return null;
+        return 0;
     }
 }

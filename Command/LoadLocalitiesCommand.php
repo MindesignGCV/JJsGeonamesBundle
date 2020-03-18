@@ -85,7 +85,7 @@ class LoadLocalitiesCommand extends Command
     /**
      * Executes the load localities command
      */
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $countries = $input->getArgument('country');
 
@@ -117,7 +117,7 @@ class LoadLocalitiesCommand extends Command
 
             $table->render($output);
 
-            return null;
+            return 0;
         }
 
         // Import the specified countries
@@ -130,6 +130,6 @@ class LoadLocalitiesCommand extends Command
             $output
         );
 
-        return null;
+        return 0;
     }
 }

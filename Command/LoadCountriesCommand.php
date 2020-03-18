@@ -62,13 +62,13 @@ class LoadCountriesCommand extends Command
      * @param InputInterface  $input  Input interface
      * @param OutputInterface $output Output interface
      */
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $file = $input->getArgument('file');
         $log = new OutputLogger($output);
 
         $this->countryLoader->load($file, $log);
 
-        return null;
+        return 0;
     }
 }
