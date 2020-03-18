@@ -10,10 +10,11 @@ use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use JJs\Bundle\GeonamesBundle\Repository\CityRepository;
+use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
+use Knp\DoctrineBehaviors\Model\Sluggable\SluggableMethodsTrait;
 
 /**
  * City
@@ -28,18 +29,19 @@ use JJs\Bundle\GeonamesBundle\Repository\CityRepository;
  *
  * @author Josiah <josiah@jjs.id.au>
  */
-class City extends Locality
+class City extends Locality implements SluggableInterface
 {
+    use SluggableMethodsTrait;
+
     /**
      * @ManyToOne(targetEntity="State")
      */
     protected ?State $state = null;
 
     /**
-     * @Gedmo\Slug(fields={"nameAscii"})
-     * @ORM\Column(length=128, unique=true, nullable=true)
+     * @ORM\Column(length=128, nullable=false)
      */
-    private ?string $slug = null;
+    private string $slug = '';
 
     private ArrayCollection $relation;
 
@@ -68,18 +70,6 @@ class City extends Locality
         return $this->getLatitude() . ',' . $this->getLongitude();
     }
 
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(?string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
     public function getRelation(): ArrayCollection
     {
         return $this->relation;
@@ -90,5 +80,13 @@ class City extends Locality
         $this->relation = $relation;
 
         return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getSluggableFields(): array
+    {
+        return ['nameAscii'];
     }
 }

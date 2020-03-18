@@ -15,14 +15,17 @@
     "target-dir": "JJs/Bundle/GeonamesBundle",
     "require": {
         "php": "*",
-        "guzzle/guzzle": "@stable",
-        "macs/common": "@stable",
-        "symfony/framework-bundle": "@stable"
+        "guzzlehttp/guzzle": ">=6",
+        "macs/common": ">=1",
+        "symfony/framework-bundle": ">=5",
+        "knplabs/doctrine-behaviors": ">=2"
     },
     "require-dev": {
-        "symfony/console": "@stable",
-        "symfony/dom-crawler": "@stable",
-        "symfony/css-selector": "@stable",
-        "jms/cg": "@stable"
-    }
+        "symfony/console": ">=5",
+        "symfony/dom-crawler": ">=5",
+        "symfony/css-selector": ">=5",
+        "jms/cg": ">=1.2"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": false
 }
