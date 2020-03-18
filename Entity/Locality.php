@@ -90,6 +90,7 @@ abstract class Locality
      * Timezone
      *
      * @ManyToOne(targetEntity="Timezone")
+     * @JMS\MaxDepth(2)
      * @var Timezone
      */
     protected $timezone;
