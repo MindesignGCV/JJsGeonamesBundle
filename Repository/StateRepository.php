@@ -21,10 +21,13 @@
  * THE SOFTWARE.
  */
 
-namespace JJs\Bundle\GeonamesBundle\Entity;
+namespace JJs\Bundle\GeonamesBundle\Repository;
 
-use JJs\Bundle\GeonamesBundle\Data\FeatureCodes;
+use Doctrine\Persistence\ManagerRegistry;
+use JJs\Bundle\GeonamesBundle\Entity\State;
+use JJs\Bundle\GeonamesBundle\Model\CountryRepositoryInterface;
 use JJs\Bundle\GeonamesBundle\Model\LocalityInterface;
+use JJs\Bundle\GeonamesBundle\Model\TimezoneRepositoryInterface;
 
 /**
  * State Repository
@@ -35,6 +38,18 @@ use JJs\Bundle\GeonamesBundle\Model\LocalityInterface;
  */
 class StateRepository extends LocalityRepository
 {
+    public function __construct(
+        ManagerRegistry $registry,
+        CountryRepositoryInterface $countryRepository,
+        TimezoneRepositoryInterface $timezoneRepository
+    ) {
+        parent::__construct(
+            $registry,
+            $countryRepository,
+            $timezoneRepository,
+            State::class
+        );
+    }
     /**
      * Returns a state
      * 

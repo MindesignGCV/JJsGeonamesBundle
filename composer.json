@@ -1,5 +1,5 @@
 {
-    "name": "jjs/geonames-bundle",
+    "name": "macs/geonames-bundle",
     "description": "GeoNames.org geographical data and associated functionality",
     "keywords": ["GeoNames.org", "geographical", "countries", "database"],
     "license": "MIT",
@@ -13,17 +13,16 @@
         "psr-0": {"JJs\\Bundle\\GeonamesBundle": ""}
     },
     "target-dir": "JJs/Bundle/GeonamesBundle",
-    "minimum-stability": "dev",
     "require": {
-        "php": "~5.4",
-        "guzzle/http": "~3.5",
-        "jjs/common": "*",
-        "symfony/framework-bundle": "~2.1"
+        "php": "*",
+        "guzzle/guzzle": "@stable",
+        "macs/common": "@stable",
+        "symfony/framework-bundle": "@stable"
     },
     "require-dev": {
-        "symfony/console": "~2.1",
-        "symfony/dom-crawler": "~2.1",
-        "symfony/css-selector": "~2.2",
-        "jms/cg": "~1.0"
+        "symfony/console": "@stable",
+        "symfony/dom-crawler": "@stable",
+        "symfony/css-selector": "@stable",
+        "jms/cg": "@stable"
     }
 }

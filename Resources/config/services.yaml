@@ -1,0 +1,23 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false # Allows optimizing the container by removing unused services; this also means
+        # fetching services directly from the container via $container->get() won't work.
+        # The best practice is to be explicit about your dependencies anyway.
+
+    JJs\Bundle\GeonamesBundle\:
+        resource: "../../*"
+        exclude: "../../{DependencyInjection,Entity,Data/Schema,Data/Migrations}"
+
+    JJs\Bundle\GeonamesBundle\Import\LocalityImporter:
+        calls:
+            - method: addLocalityRepository
+              arguments:
+                  - '@JJs\Bundle\GeonamesBundle\Repository\StateRepository'
+                  - [ADM1]
+            - method: addLocalityRepository
+              arguments:
+                  - '@JJs\Bundle\GeonamesBundle\Repository\CityRepository'
+                  - [PPL, PPLA, PPLA2, PPLA3, PPLA4, PPLC, PPLF, PPLG, PPLL, PPLS, PPLX]

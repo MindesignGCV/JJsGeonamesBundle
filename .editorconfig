@@ -1,0 +1,15 @@
+[*]
+indent_style = space
+
+[{*.yaml,*.yml,*.yml.dist}]
+indent_size = 4
+
+[*.php]
+indent_size = 4
+
+[*.json]
+indent_size = 4
+
+[*.html.twig]
+indent_size = 4
+

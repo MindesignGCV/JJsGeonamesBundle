@@ -11,11 +11,12 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 use JJs\Bundle\GeonamesBundle\Model\TimezoneInterface;
+use JJs\Bundle\GeonamesBundle\Model\TimezoneRepositoryInterface;
 
 /**
  * Timezone
  *
- * @Entity(repositoryClass="TimezoneRepository")
+ * @Entity(repositoryClass=TimezoneRepository::class)
  * @Table(name="geo_timezone")
  * @author Josiah <josiah@jjs.id.au>
  */

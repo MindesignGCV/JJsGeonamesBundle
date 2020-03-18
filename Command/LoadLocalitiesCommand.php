@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2013 Josiah Truasheim
  *
@@ -24,15 +25,15 @@
 
 namespace JJs\Bundle\GeonamesBundle\Command;
 
-use JJs\Bundle\GeonamesBundle\Data\LocalityLoader;
-use JJs\Bundle\GeonamesBundle\Export;
 use JJs\Common\Console\OutputLogger;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Helper\TableHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use JJs\Bundle\GeonamesBundle\Import\Filter as Filter;
+use JJs\Bundle\GeonamesBundle\Import\LocalityImporter;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -42,20 +43,30 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Josiah <josiah@jjs.id.au>
  */
-class LoadLocalitiesCommand extends ContainerAwareCommand
+class LoadLocalitiesCommand extends Command
 {
+    protected static $defaultName = 'geonames:load:localities';
+
+    private LocalityImporter $localityImporter;
+
+    public function __construct(LocalityImporter $localityImporter)
+    {
+        parent::__construct();
+        $this->localityImporter = $localityImporter;
+    }
+
     /**
      * Configures this command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('geonames:load:localities')
             ->setDescription('Loads localities into the state and city repositories from a geonames.org data file')
             ->addArgument(
                 'country',
                 InputArgument::OPTIONAL | InputArgument::IS_ARRAY,
-                "Country to load the localities defaults to all countries")
+                "Country to load the localities defaults to all countries"
+            )
             ->addOption(
                 'filter',
                 null,
@@ -64,32 +75,27 @@ class LoadLocalitiesCommand extends ContainerAwareCommand
                 array()
             )
             ->addOption(
-                'info', null,
+                'info',
+                null,
                 InputOption::VALUE_NONE,
-                "Prints information about the locality importer");
+                "Prints information about the locality importer"
+            );
     }
 
     /**
      * Executes the load localities command
-     *
-     * @param InputInterface  $input  Input interface
-     * @param OutputInterface $output Output interface
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
-        $container = $this->getContainer();
-        $importer = $container->get('geonames.locality.importer');
-
         $countries = $input->getArgument('country');
 
 
         $filter = new Filter();
-        if(is_string($input->getOption('filter'))){
+        if (is_string($input->getOption('filter'))) {
 
-            $filterRules = explode ( ",",  $input->getOption('filter'));
+            $filterRules = explode(",",  $input->getOption('filter'));
 
-            if(count($filterRules) > 0)
-            {
+            if (count($filterRules) > 0) {
                 foreach ($filterRules as $rule) {
                     $filter->addRule($rule);
                     $output->writeLn("Added filter rule: " . $rule);
@@ -100,21 +106,30 @@ class LoadLocalitiesCommand extends ContainerAwareCommand
 
         // Display importer information if requested
         if ($input->getOption('info')) {
+            /** @var Table $table */
             $table = $this->getHelper('table');
-            $table->setLayout(TableHelper::LAYOUT_BORDERLESS);
+            $table->setStyle('borderless');
             $table->setHeaders(['Feature', 'Repository']);
 
-            foreach ($importer->getLocalityRepositories() as $feature => $repository) {
+            foreach ($this->localityImporter->getLocalityRepositories() as $feature => $repository) {
                 $table->addRow([$feature, get_class($repository)]);
             }
 
             $table->render($output);
 
-            return;
+            return null;
         }
 
         // Import the specified countries
-        $progress = $this->getHelper('progress');
-        $importer->import($countries, $filter, new OutputLogger($output), $progress, $output);
+        $progress = new ProgressBar($output);
+        $this->localityImporter->import(
+            $countries,
+            $filter,
+            new OutputLogger($output),
+            $progress,
+            $output
+        );
+
+        return null;
     }
 }

@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\Table;
 use JJs\Bundle\GeonamesBundle\Model\CountryInterface;
+use JJs\Bundle\GeonamesBundle\Model\CountryRepositoryInterface;
 
 /**
  * Country
@@ -21,7 +22,7 @@ use JJs\Bundle\GeonamesBundle\Model\CountryInterface;
  * A politically or geographically separate division of planetary space forming
  * the largest geographical categorization.
  *
- * @Entity(repositoryClass="CountryRepository")
+ * @Entity(repositoryClass=CountryRepository::class)
  * @Table(name="geo_country")
  * @author Josiah <josiah@jjs.id.au>
  */

@@ -1,8 +1,10 @@
 <?php
 
-namespace JJs\Bundle\GeonamesBundle\Entity;
+namespace JJs\Bundle\GeonamesBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use JJs\Bundle\GeonamesBundle\Entity\Country;
 use JJs\Bundle\GeonamesBundle\Model\CountryRepositoryInterface;
 use JJs\Bundle\GeonamesBundle\Model\CountryInterface;
 
@@ -11,8 +13,13 @@ use JJs\Bundle\GeonamesBundle\Model\CountryInterface;
  *
  * @author Josiah <josiah@jjs.id.au>
  */
-class CountryRepository extends EntityRepository implements CountryRepositoryInterface
+class CountryRepository extends ServiceEntityRepository implements CountryRepositoryInterface
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Country::class);
+    }
+
     /**
      * Returns the country which matches the specified country code
      *

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2013 Josiah Truasheim
  * 
@@ -21,10 +22,13 @@
  * THE SOFTWARE.
  */
 
-namespace JJs\Bundle\GeonamesBundle\Entity;
+namespace JJs\Bundle\GeonamesBundle\Repository;
 
-use JJs\Bundle\GeonamesBundle\Data\FeatureCodes;
+use Doctrine\Persistence\ManagerRegistry;
+use JJs\Bundle\GeonamesBundle\Entity\City;
+use JJs\Bundle\GeonamesBundle\Model\CountryRepositoryInterface;
 use JJs\Bundle\GeonamesBundle\Model\LocalityInterface;
+use JJs\Bundle\GeonamesBundle\Model\TimezoneRepositoryInterface;
 
 /**
  * City Repository
@@ -35,6 +39,19 @@ use JJs\Bundle\GeonamesBundle\Model\LocalityInterface;
  */
 class CityRepository extends LocalityRepository
 {
+    public function __construct(
+        ManagerRegistry $registry,
+        CountryRepositoryInterface $countryRepo,
+        TimezoneRepositoryInterface $timezoneRepo
+    ) {
+        parent::__construct(
+            $registry,
+            $countryRepo,
+            $timezoneRepo,
+            City::class
+        );
+    }
+
     /**
      * Returns a reference city from the database which matches the specified
      * city

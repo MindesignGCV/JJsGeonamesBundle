@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2013 Josiah Truasheim
  * 
@@ -21,70 +22,34 @@
  * THE SOFTWARE.
  */
 
-namespace JJs\Bundle\GeonamesBundle\Entity;
+namespace JJs\Bundle\GeonamesBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use JJs\Bundle\GeonamesBundle\Entity\Locality;
+use JJs\Bundle\GeonamesBundle\Model\CountryRepositoryInterface;
 use JJs\Bundle\GeonamesBundle\Model\LocalityInterface;
 use JJs\Bundle\GeonamesBundle\Model\LocalityRepositoryInterface;
+use JJs\Bundle\GeonamesBundle\Model\TimezoneRepositoryInterface;
 
 /**
  * Locality Repository
  *
  * @author Josiah <josiah@jjs.id.au>
  */
-abstract class LocalityRepository extends EntityRepository implements LocalityRepositoryInterface
+abstract class LocalityRepository extends ServiceEntityRepository implements LocalityRepositoryInterface
 {
-    /**
-     * Country Repository
-     * 
-     * @var CountryRepository
-     */
-    protected $countryRepository;
+    protected CountryRepositoryInterface $countryRepository;
+    protected TimezoneRepositoryInterface $timezoneRepository;
 
-    /**
-     * Timezone Repository
-     * 
-     * @var TimezoneRepository
-     */
-    protected $timezoneRepository;
-
-    /**
-     * Returns the country repository
-     * 
-     * @return CountryRepository
-     */
-    public function getCountryRepository()
-    {
-        return $this->countryRepository;
-    }
-
-    /**
-     * Sets the country repository
-     * 
-     * @param CountryRepository $countryRepository Country repository
-     */
-    public function setCountryRepository(CountryRepository $countryRepository)
-    {
+    public function __construct(
+        ManagerRegistry $registry,
+        CountryRepositoryInterface $countryRepository,
+        TimezoneRepositoryInterface $timezoneRepository,
+        string $entityClass = Locality::class
+    ) {
+        parent::__construct($registry, $entityClass);
         $this->countryRepository = $countryRepository;
-    }
-
-    /**
-     * Returns the timezone repository
-     * 
-     * @return TimezoneRepository
-     */
-    public function getTimezoneRepository()
-    {
-        return $this->timezoneRepository;
-    }
-
-    /**
-     * Sets the timezone repository
-     * 
-     * @param TimezoneRepository $timezoneRepository Timezone repository
-     */
-    public function setTimezoneRepository(TimezoneRepository $timezoneRepository)
-    {
         $this->timezoneRepository = $timezoneRepository;
     }
 
@@ -112,16 +77,13 @@ abstract class LocalityRepository extends EntityRepository implements LocalityRe
      */
     public function copyLocality(LocalityInterface $source, Locality $destination)
     {
-        $countryRepository  = $this->getCountryRepository();
-        $timezoneRepository = $this->getTimezoneRepository();
-
         // Copy the geoname identifier
         if ($geonameIdentifier = $source->getGeonameIdentifier()) {
             $destination->setGeonameIdentifier($geonameIdentifier);
         }
 
         // Copy the country
-        if ($country = $countryRepository->getCountry($source->getCountry())) {
+        if ($country = $this->countryRepository->getCountry($source->getCountry())) {
             $destination->setCountry($country);
         }
 
@@ -143,7 +105,7 @@ abstract class LocalityRepository extends EntityRepository implements LocalityRe
 
 
         // Copy the timezone
-        if ($timezone = $timezoneRepository->getTimezone($source->getTimezone())) {
+        if ($timezone = $this->timezoneRepository->getTimezone($source->getTimezone())) {
             $destination->setTimezone($timezone);
         }
 

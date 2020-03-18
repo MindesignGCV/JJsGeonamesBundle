@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use JJs\Bundle\GeonamesBundle\Repository\StateRepository;
 
 /**
  * State
@@ -19,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  * The first level administrative division of a country. Refered to as a
  * 'province' for some countries.
  *
- * @Entity(repositoryClass="StateRepository")
+ * @Entity(repositoryClass=StateRepository::class)
  * @Table(name="geo_state", indexes={@ORM\Index(name="geo_state_geoname_id", columns={"geoname_id"})}))
  * @author Josiah <josiah@jjs.id.au>
  */
@@ -28,23 +29,19 @@ class State extends Locality
 
     /**
      * @Gedmo\Slug(fields={"nameAscii"})
-     * @ORM\Column(length=128, unique=true)
+     * @ORM\Column(length=128, unique=true, nullable=true)
      */
-    private $slug;
+    private ?string $slug = null;
 
-    /**
-     * @return mixed
-     */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    /**
-     * @param mixed $slug
-     */
-    public function setSlug($slug)
+    public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
     }
 }

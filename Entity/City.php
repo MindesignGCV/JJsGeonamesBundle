@@ -13,13 +13,14 @@ use Doctrine\ORM\Mapping\Table;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JJs\Bundle\GeonamesBundle\Repository\CityRepository;
 
 /**
  * City
  *
  * A city, town, village or other agglomeration of buildings where people work.
  *
- * @Entity(repositoryClass="CityRepository")
+ * @Entity(repositoryClass=CityRepository::class)
  * @Table(name="geo_city", indexes={
  *      @ORM\Index(name="geo_city_geoname_id", columns={"geoname_id"}),
  *      @ORM\Index(name="lat_lng", columns={"latitude", "longitude"}),
@@ -30,45 +31,29 @@ use Doctrine\Common\Collections\ArrayCollection;
 class City extends Locality
 {
     /**
-     * State
-     *
      * @ManyToOne(targetEntity="State")
-     * @var State
      */
-    protected $state;
+    protected ?State $state = null;
 
     /**
      * @Gedmo\Slug(fields={"nameAscii"})
-     * @ORM\Column(length=128, unique=true)
+     * @ORM\Column(length=128, unique=true, nullable=true)
      */
-    private $slug;
+    private ?string $slug = null;
 
-    /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     */
-    private $relation;
+    private ArrayCollection $relation;
 
     public function __construct() {
-		parent::__construct();
+        parent::__construct();
         $this->relation = new ArrayCollection();
     }
 
-    /**
-     * Returns the state
-     * 
-     * @return State
-     */
-    public function getState()
+    public function getState(): ?State
     {
         return $this->state;
     }
 
-    /**
-     * Sets the state
-     * 
-     * @param State $state State
-     */
-    public function setState(State $state)
+    public function setState(State $state): self
     {
         $this->state = $state;
 
@@ -83,35 +68,27 @@ class City extends Locality
         return $this->getLatitude() . ',' . $this->getLongitude();
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    /**
-     * @param mixed $slug
-     */
-    public function setSlug($slug)
+    public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getRelation()
+    public function getRelation(): ArrayCollection
     {
         return $this->relation;
     }
 
-    /**
-     * @param ArrayCollection $relation
-     */
-    public function setRelation($relation)
+    public function setRelation(ArrayCollection $relation): self
     {
         $this->relation = $relation;
+
+        return $this;
     }
 }

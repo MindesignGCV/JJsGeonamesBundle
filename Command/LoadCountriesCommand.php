@@ -23,13 +23,12 @@
 
 namespace JJs\Bundle\GeonamesBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use JJs\Bundle\GeonamesBundle\Data\CountryLoader;
 use JJs\Common\Console\OutputLogger;
+use Symfony\Component\Console\Command\Command;
 
 /**
  * Load Countries Command
@@ -38,15 +37,21 @@ use JJs\Common\Console\OutputLogger;
  *
  * @author Josiah <josiah@jjs.id.au>
  */
-class LoadCountriesCommand extends ContainerAwareCommand
+class LoadCountriesCommand extends Command
 {
-    /**
-     * Configures this command
-     */
-    protected function configure()
+    protected static $defaultName = 'geonames:load:countries';
+
+    private CountryLoader $countryLoader;
+
+    public function __construct(CountryLoader $countryLoader)
+    {
+        parent::__construct();
+        $this->countryLoader = $countryLoader;
+    }
+
+    protected function configure(): void
     {
         $this
-            ->setName('geonames:load:countries')
             ->setDescription('Loads countries into the country repository from a data file')
             ->addArgument('file', InputArgument::OPTIONAL, "Data file", CountryLoader::DEFAULT_FILE);
     }
@@ -57,14 +62,13 @@ class LoadCountriesCommand extends ContainerAwareCommand
      * @param InputInterface  $input  Input interface
      * @param OutputInterface $output Output interface
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
-        $container = $this->getContainer();
-        $loader = $container->get('geonames.country.loader');
-
         $file = $input->getArgument('file');
         $log = new OutputLogger($output);
 
-        $loader->load($file, $log);
+        $this->countryLoader->load($file, $log);
+
+        return null;
     }
 }

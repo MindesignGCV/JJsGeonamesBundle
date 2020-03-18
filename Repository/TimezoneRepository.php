@@ -21,9 +21,12 @@
  * THE SOFTWARE.
  */
 
-namespace JJs\Bundle\GeonamesBundle\Entity;
+namespace JJs\Bundle\GeonamesBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use JJs\Bundle\GeonamesBundle\Entity\Timezone;
+use JJs\Bundle\GeonamesBundle\Model\CountryRepositoryInterface;
 use JJs\Bundle\GeonamesBundle\Model\TimezoneInterface;
 use JJs\Bundle\GeonamesBundle\Model\TimezoneRepositoryInterface;
 
@@ -34,14 +37,17 @@ use JJs\Bundle\GeonamesBundle\Model\TimezoneRepositoryInterface;
  *
  * @author Josiah <josiah@jjs.id.au>
  */
-class TimezoneRepository extends EntityRepository implements TimezoneRepositoryInterface
+class TimezoneRepository extends ServiceEntityRepository implements TimezoneRepositoryInterface
 {
-    /**
-     * Country Repository
-     * 
-     * @var CountryRepository
-     */
-    protected $countryRepository;
+    protected CountryRepositoryInterface $countryRepository;
+
+    public function __construct(
+        ManagerRegistry $registry,
+        CountryRepositoryInterface $countryRepository
+    ) {
+        parent::__construct($registry, Timezone::class);
+        $this->countryRepository = $countryRepository;
+    }
 
     /**
      * Returns the country repository
@@ -51,16 +57,6 @@ class TimezoneRepository extends EntityRepository implements TimezoneRepositoryI
     public function getCountryRepository()
     {
         return $this->countryRepository;
-    }
-
-    /**
-     * Sets the country repository
-     * 
-     * @param CountryRepository $countryRepository Country repository
-     */
-    public function setCountryRepository(CountryRepository $countryRepository)
-    {
-        $this->countryRepository = $countryRepository;
     }
 
     /**
@@ -94,9 +90,7 @@ class TimezoneRepository extends EntityRepository implements TimezoneRepositoryI
      */
     public function copyTimezone(TimezoneInterface $source, Timezone $destination)
     {
-        $countryRepository = $this->getCountryRepository();
-
-        $country = $countryRepository->getCountry($source->getCountry());
+        $country = $this->countryRepository->getCountry($source->getCountry());
         $code    = $source->getCode();
 
         // Copy country information

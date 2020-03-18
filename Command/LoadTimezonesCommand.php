@@ -24,13 +24,12 @@
 
 namespace JJs\Bundle\GeonamesBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use JJs\Bundle\GeonamesBundle\Data\TimezoneLoader;
 use JJs\Common\Console\OutputLogger;
+use Symfony\Component\Console\Command\Command;
 
 /**
  * Load Timezones Command
@@ -39,33 +38,38 @@ use JJs\Common\Console\OutputLogger;
  *
  * @author Josiah <josiah@jjs.id.au>
  */
-class LoadTimezonesCommand extends ContainerAwareCommand
+class LoadTimezonesCommand extends Command
 {
+    protected static $defaultName = 'geonames:load:timezones';
+
+    private TimezoneLoader $timezoneLoader;
+
+    public function __construct(TimezoneLoader $timezoneLoader)
+    {
+        parent::__construct();
+        $this->timezoneLoader = $timezoneLoader;
+    }
+
     /**
      * Configures this command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('geonames:load:timezones')
             ->setDescription('Loads timezones into the timezone repository from a geonames.org data file')
             ->addArgument('file', InputArgument::OPTIONAL, "Data file", TimezoneLoader::DEFAULT_FILE);
     }
 
     /**
      * Executes the load timezones command
-     * 
-     * @param InputInterface  $input  Input interface
-     * @param OutputInterface $output Output interface
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
-        $container = $this->getContainer();
-        $loader = $container->get('geonames.timezone.loader');
-
         $file = $input->getArgument('file');
         $log = new OutputLogger($output);
 
-        $loader->load($file, $log);
+        $this->timezoneLoader->load($file, $log);
+
+        return null;
     }
 }
