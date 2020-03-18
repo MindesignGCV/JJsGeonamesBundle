@@ -1,6 +1,6 @@
 {
     "name": "macs/geonames-bundle",
-    "version": "v1.4.4",
+    "version": "v1.4.5",
     "description": "GeoNames.org geographical data and associated functionality",
     "keywords": ["GeoNames.org", "geographical", "countries", "database"],
     "license": "MIT",
@@ -19,6 +19,7 @@
         "php": "*",
         "guzzlehttp/guzzle": ">=6",
         "macs/common": ">=1",
+        "jms/serializer": "*",
         "symfony/framework-bundle": ">=5",
         "knplabs/doctrine-behaviors": ">=2"
     },

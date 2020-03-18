@@ -10,12 +10,14 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\MappedSuperclass;
 use Doctrine\ORM\Mapping\Table;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Geographical Locality
  *
  * Identifies a geographical location ranging from large areas to buildings.
  *
+ * @JMS\ExclusionPolicy("none")
  * @MappedSuperclass()
  * @author Josiah <Josiah@jjs.id.au>
  */
@@ -47,6 +49,7 @@ abstract class Locality
      *
      * @ManyToOne(targetEntity="Country")
      * @JoinColumn(nullable=false)
+     * @JMS\MaxDepth(1)
      * @var Country
      */
     protected $country;

@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JJs\Bundle\GeonamesBundle\Repository\StateRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableMethodsTrait;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * State
@@ -21,6 +22,7 @@ use Knp\DoctrineBehaviors\Model\Sluggable\SluggableMethodsTrait;
  * The first level administrative division of a country. Refered to as a
  * 'province' for some countries.
  *
+ * @JMS\ExclusionPolicy("none")
  * @Entity(repositoryClass=StateRepository::class)
  * @Table(name="geo_state", indexes={@ORM\Index(name="geo_state_geoname_id", columns={"geoname_id"})}))
  * @author Josiah <josiah@jjs.id.au>

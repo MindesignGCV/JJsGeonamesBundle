@@ -15,6 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use JJs\Bundle\GeonamesBundle\Repository\CityRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableMethodsTrait;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * City
@@ -27,6 +28,7 @@ use Knp\DoctrineBehaviors\Model\Sluggable\SluggableMethodsTrait;
  *      @ORM\Index(name="lat_lng", columns={"latitude", "longitude"}),
  * }))
  *
+ * @JMS\ExclusionPolicy("none")
  * @author Josiah <josiah@jjs.id.au>
  */
 class City extends Locality implements SluggableInterface
@@ -35,6 +37,7 @@ class City extends Locality implements SluggableInterface
 
     /**
      * @ManyToOne(targetEntity="State")
+     * @JMS\MaxDepth(2)
      */
     protected ?State $state = null;
 
@@ -45,6 +48,8 @@ class City extends Locality implements SluggableInterface
 
     /**
      * @var ArrayCollection
+     * @JMS\Type("ArrayCollection<JJs\Bundle\GeonamesBundle\Entity\Locality>")
+     * @JMS\MaxDepth(2)
      */
     private $relation;
 
