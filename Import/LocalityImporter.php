@@ -26,7 +26,7 @@ namespace JJs\Bundle\GeonamesBundle\Import;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Guzzle\Http\Client as HttpClient;
+use GuzzleHttp\Client as HttpClient;
 use InvalidArgumentException;
 use JJs\Bundle\GeonamesBundle\Entity\City;
 use JJs\Bundle\GeonamesBundle\Entity\State;
