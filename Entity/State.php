@@ -10,9 +10,10 @@ use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use JJs\Bundle\GeonamesBundle\Repository\StateRepository;
+use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
+use Knp\DoctrineBehaviors\Model\Sluggable\SluggableMethodsTrait;
 
 /**
  * State
@@ -24,24 +25,12 @@ use JJs\Bundle\GeonamesBundle\Repository\StateRepository;
  * @Table(name="geo_state", indexes={@ORM\Index(name="geo_state_geoname_id", columns={"geoname_id"})}))
  * @author Josiah <josiah@jjs.id.au>
  */
-class State extends Locality
+class State extends Locality implements SluggableInterface
 {
+    use SluggableMethodsTrait;
 
     /**
-     * @Gedmo\Slug(fields={"nameAscii"})
-     * @ORM\Column(length=128, unique=true, nullable=true)
+     * @ORM\Column(length=128, nullable=false)
      */
-    private ?string $slug = null;
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(?string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
+    private string $slug = '';
 }
