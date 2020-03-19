@@ -37,15 +37,6 @@ class State extends Locality implements SluggableInterface
     private string $slug = '';
 
     /**
-     * Fields used to generate the slug.
-     * @return string[]
-     */
-    public function getSluggableFields(): array
-    {
-        return ['nameAscii'];
-    }
-
-    /**
      * @return string[]
      */
     public function getSluggableFields(): array
