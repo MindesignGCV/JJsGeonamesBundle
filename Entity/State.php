@@ -44,4 +44,19 @@ class State extends Locality implements SluggableInterface
     {
         return ['nameAscii'];
     }
+
+    /**
+     * @return string[]
+     */
+    public function getSluggableFields(): array
+    {
+        return [
+            empty($this->nameAscii) ? 'emptySlug': 'nameAscii'
+        ];
+    }
+
+    public function getEmptySlug(): string
+    {
+        return '-';
+    }
 }

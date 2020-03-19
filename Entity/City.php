@@ -95,6 +95,13 @@ class City extends Locality implements SluggableInterface
      */
     public function getSluggableFields(): array
     {
-        return ['nameAscii'];
+        return [
+            empty($this->nameAscii) ? 'emptySlug': 'nameAscii'
+        ];
+    }
+
+    public function getEmptySlug(): string
+    {
+        return '-';
     }
 }
