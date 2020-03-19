@@ -646,7 +646,6 @@ class LocalityImporter
 
             // Persist the locality
             $localityManager->persist($locality);
-            $localityManager->flush();
 
             if($locality instanceof City)
                 $cities[] = $locality;
