@@ -660,6 +660,14 @@ class LocalityImporter
                 'type'         => $type,
                 'repository'   => get_class($localityRepository),
             ]);*/
+
+            if ($lineNumber % 20000 === 0) {
+                foreach ($managers as $manager) {
+                    $manager->flush();
+                }
+
+                gc_collect_cycles();
+            }
         }
 
         $progressBar->finish();
@@ -677,12 +685,15 @@ class LocalityImporter
                 }
             }
             $cityManager->flush();
+            gc_collect_cycles();
         }
 
         // Flush all managers
         foreach ($managers as $manager) {
             $manager->flush();
         }
+
+        gc_collect_cycles();
 
         $log->notice("{code} ({country}) data saved", [
             'code'    => $country->getCode(),
