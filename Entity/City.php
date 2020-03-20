@@ -42,7 +42,7 @@ class City extends Locality implements SluggableInterface
     protected ?State $state = null;
 
     /**
-     * @ORM\Column(length=128, nullable=false)
+     * @ORM\Column(nullable=false)
      */
     private string $slug = '';
 

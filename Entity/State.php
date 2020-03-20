@@ -32,7 +32,7 @@ class State extends Locality implements SluggableInterface
     use SluggableMethodsTrait;
 
     /**
-     * @ORM\Column(length=128, nullable=false)
+     * @ORM\Column(nullable=false)
      */
     private string $slug = '';
 
