@@ -678,10 +678,15 @@ class LocalityImporter
         if(count($cities)) {
             $cityManager = $managerRegistry->getManagerForClass(get_class($cities[0]));
 
-            foreach ($cities AS $city) {
+            foreach ($cities AS $index => $city) {
                 if (isset($states[$city->getAdmin1Code()])) {
                     $city->setState($states[$city->getAdmin1Code()]);
                     $cityManager->persist($city);
+                }
+
+                if ($index % 10000 === 0) {
+                    $cityManager->flush();
+                    gc_collect_cycles();
                 }
             }
             $cityManager->flush();
