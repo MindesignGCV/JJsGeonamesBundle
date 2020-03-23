@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping\Table;
 use JJs\Bundle\GeonamesBundle\Model\CountryInterface;
 use JJs\Bundle\GeonamesBundle\Model\CountryRepositoryInterface;
 use JMS\Serializer\Annotation as JMS;
+use JJs\Bundle\GeonamesBundle\Repository\CountryRepository;
 
 /**
  * Country

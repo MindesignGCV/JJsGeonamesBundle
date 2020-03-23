@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 use JJs\Bundle\GeonamesBundle\Model\TimezoneInterface;
 use JJs\Bundle\GeonamesBundle\Model\TimezoneRepositoryInterface;
+use JJs\Bundle\GeonamesBundle\Repository\TimezoneRepository;
 
 /**
  * Timezone
