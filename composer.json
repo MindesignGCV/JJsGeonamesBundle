@@ -1,6 +1,6 @@
 {
     "name": "macs/geonames-bundle",
-    "version": "v2.0.2",
+    "version": "v2.0.3",
     "description": "GeoNames.org geographical data and associated functionality",
     "keywords": ["GeoNames.org", "geographical", "countries", "database"],
     "license": "MIT",
