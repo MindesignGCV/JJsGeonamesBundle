@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Entity;
+namespace JJs\Bundle\GeonamesBundle\Entity;
 
 interface UuidEntity
 {

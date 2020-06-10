@@ -2,8 +2,6 @@
 
 namespace JJs\Bundle\GeonamesBundle\Entity;
 
-use App\Entity\UuidEntity;
-use App\Entity\UuidEntityTrait;
 use DateTime;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
