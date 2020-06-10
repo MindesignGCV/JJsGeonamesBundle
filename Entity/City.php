@@ -37,6 +37,10 @@ class City extends Locality implements SluggableInterface
 
     /**
      * @ManyToOne(targetEntity="State")
+     * @JoinColumn(
+     *     name="state_uuid",
+     *     referencedColumnName="uuid",
+     * )
      * @JMS\MaxDepth(3)
      */
     protected ?State $state = null;

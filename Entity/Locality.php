@@ -42,6 +42,10 @@ abstract class Locality implements UuidEntity
      * @ManyToOne(targetEntity="Country")
      * @JoinColumn(nullable=false)
      * @JMS\MaxDepth(1)
+     * @JoinColumn(
+     *     name="country_uuid",
+     *     referencedColumnName="uuid",
+     * )
      * @var Country
      */
     protected $country;
@@ -83,6 +87,10 @@ abstract class Locality implements UuidEntity
      *
      * @ManyToOne(targetEntity="Timezone")
      * @JMS\MaxDepth(2)
+     * @JoinColumn(
+     *     name="timezone_uuid",
+     *     referencedColumnName="uuid",
+     * )
      * @var Timezone
      */
     protected $timezone;
