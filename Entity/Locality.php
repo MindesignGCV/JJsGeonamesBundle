@@ -40,9 +40,9 @@ abstract class Locality implements UuidEntity
      * Country
      *
      * @ManyToOne(targetEntity="Country")
-     * @JoinColumn(nullable=false)
      * @JMS\MaxDepth(1)
      * @JoinColumn(
+     *     nullable=false,
      *     name="country_uuid",
      *     referencedColumnName="uuid",
      * )

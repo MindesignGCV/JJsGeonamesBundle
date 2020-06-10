@@ -29,7 +29,11 @@ class Timezone implements TimezoneInterface, UuidEntity
      * Country
      *
      * @ManyToOne(targetEntity="Country")
-     * @JoinColumn(nullable=false)
+     * @JoinColumn(
+     *     nullable=false,
+     *     name="country_uuid",
+     *     referencedColumnName="uuid",
+     * )
      * @var Country
      */
     protected $country;
