@@ -2,6 +2,8 @@
 
 namespace JJs\Bundle\GeonamesBundle\Entity;
 
+use App\Entity\UuidEntity;
+use App\Entity\UuidEntityTrait;
 use DateTime;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -21,17 +23,9 @@ use JJs\Bundle\GeonamesBundle\Repository\TimezoneRepository;
  * @Table(name="geo_timezone")
  * @author Josiah <josiah@jjs.id.au>
  */
-class Timezone implements TimezoneInterface
+class Timezone implements TimezoneInterface, UuidEntity
 {
-    /**
-     * Unique identifier which represents the timezone in the local database.
-     *
-     * @Column(type="integer")
-     * @GeneratedValue
-     * @Id
-     * @var int
-     */
-    protected $id;
+    use UuidEntityTrait;
 
     /**
      * Country

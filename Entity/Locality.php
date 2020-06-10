@@ -2,6 +2,8 @@
 
 namespace JJs\Bundle\GeonamesBundle\Entity;
 
+use App\Entity\UuidEntity;
+use App\Entity\UuidEntityTrait;
 use DateTime;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -21,17 +23,9 @@ use JMS\Serializer\Annotation as JMS;
  * @MappedSuperclass()
  * @author Josiah <Josiah@jjs.id.au>
  */
-abstract class Locality
+abstract class Locality implements UuidEntity
 {
-    /**
-     * Locality Identifier
-     *
-     * @Column(type="integer")
-     * @GeneratedValue
-     * @Id
-     * @var integer
-     */
-    protected $id;
+    use UuidEntityTrait;
 
     /**
      * GeoNames.org ID

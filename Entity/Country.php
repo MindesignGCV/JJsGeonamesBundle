@@ -2,6 +2,8 @@
 
 namespace JJs\Bundle\GeonamesBundle\Entity;
 
+use App\Entity\UuidEntity;
+use App\Entity\UuidEntityTrait;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -29,17 +31,9 @@ use JJs\Bundle\GeonamesBundle\Repository\CountryRepository;
  * @Table(name="geo_country")
  * @author Josiah <josiah@jjs.id.au>
  */
-class Country implements CountryInterface
+class Country implements CountryInterface, UuidEntity
 {
-    /**
-     * Unique identifier which represents the country in the local database.
-     *
-     * @Column(type="integer")
-     * @GeneratedValue
-     * @Id
-     * @var int
-     */
-    protected $id;
+    use UuidEntityTrait;
 
     /**
      * ISO code (2 character)
