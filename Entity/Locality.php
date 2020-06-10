@@ -124,6 +124,7 @@ abstract class Locality implements UuidEntity
      */
     public function __construct()
     {
+        $this->initUuid();
         $this->creationDate = new DateTime();
     }
 
